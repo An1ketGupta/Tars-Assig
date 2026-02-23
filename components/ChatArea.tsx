@@ -9,7 +9,6 @@ import type { Doc } from "@/convex/_generated/dataModel";
 import { MessageBubble } from "@/components/MessageBubble";
 import { MessageInput } from "@/components/MessageInput";
 import { DateSeparator } from "@/components/DateSeparator";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronDown } from "lucide-react";
@@ -22,7 +21,6 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
   const messages = useQuery(api.messages.list, { conversationId });
   const typingUsers = useQuery(api.typing.getTypingUsers, { conversationId });
   const markRead = useMutation(api.lastRead.markRead);
-  const { user } = useUser();
   const bottomRef = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [showNewMessages, setShowNewMessages] = useState(false);

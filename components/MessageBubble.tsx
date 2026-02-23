@@ -5,8 +5,6 @@ import { useUser } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Trash2 } from "lucide-react";
 import { formatTimestamp } from "@/lib/utils";
 import { cn } from "@/lib/utils";

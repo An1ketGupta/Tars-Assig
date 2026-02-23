@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
 import {
   Dialog,
