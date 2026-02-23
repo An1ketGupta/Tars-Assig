@@ -4,7 +4,6 @@ import { use } from "react";
 import { ChatArea } from "@/components/ChatArea";
 import { ChatHeader } from "@/components/ChatHeader";
 import { ConversationTitle } from "@/components/ConversationTitle";
-import { Sidebar } from "@/components/Sidebar";
 import { Id } from "@/convex/_generated/dataModel";
 
 interface ChatPageProps {

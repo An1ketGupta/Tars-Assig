@@ -4,7 +4,6 @@ import { useState } from "react";
 import { UserButton } from "@clerk/nextjs";
 import { MessageSquare, Users, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ConversationList } from "@/components/ConversationList";
 import { UserList } from "@/components/UserList";
