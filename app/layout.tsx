@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   title: "Tars Chat - Real-time Messaging",
   description:
     "A real-time chat messaging application built with Next.js, Convex, and Clerk",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
