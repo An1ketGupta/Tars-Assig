@@ -9,6 +9,7 @@ import { MessageBubble } from "@/components/MessageBubble";
 import { MessageInput } from "@/components/MessageInput";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronDown } from "lucide-react";
 import { formatDateSeparator } from "@/lib/utils";
 
@@ -58,17 +59,22 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
 
   if (messages === undefined) {
     return (
-      <div className="flex-1 flex items-center justify-center">
-        <div className="space-y-3 w-full max-w-md px-8">
-          {[...Array(5)].map((_, i) => (
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 px-4 py-4 space-y-4 overflow-y-auto">
+          {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className={`flex items-end gap-2 animate-pulse ${i % 2 === 0 ? "flex-row-reverse" : ""}`}
+              className={`flex items-end gap-2 ${i % 2 === 0 ? "" : "flex-row-reverse"}`}
             >
-              <div className="h-7 w-7 rounded-full bg-muted" />
-              <div className={`h-10 rounded-2xl bg-muted ${i % 2 === 0 ? "w-48" : "w-36"}`} />
+              <Skeleton className="h-7 w-7 rounded-full flex-shrink-0" />
+              <Skeleton
+                className={`h-12 rounded-2xl ${i % 2 === 0 ? "w-48 rounded-bl-sm" : "w-36 rounded-br-sm"}`}
+              />
             </div>
           ))}
+        </div>
+        <div className="p-4 border-t border-border">
+          <Skeleton className="h-11 w-full rounded-xl" />
         </div>
       </div>
     );
