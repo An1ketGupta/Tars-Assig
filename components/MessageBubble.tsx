@@ -9,6 +9,7 @@ import { Trash2 } from "lucide-react";
 import { formatTimestamp } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { MessageReactionsPicker, ReactionCounts } from "@/components/MessageReactions";
+import { MessageStatus } from "@/components/MessageStatus";
 
 interface MessageBubbleProps {
   messageId: Id<"messages">;
@@ -103,8 +104,9 @@ export function MessageBubble({
           />
         )}
 
-        <span className="text-xs text-muted-foreground mt-0.5 mx-1">
+        <span className="text-xs text-muted-foreground mt-0.5 mx-1 flex items-center gap-1">
           {formatTimestamp(timestamp)}
+          <MessageStatus isMine={isMe} />
         </span>
       </div>
     </div>
