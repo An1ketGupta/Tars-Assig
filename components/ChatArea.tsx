@@ -8,11 +8,11 @@ import { Id } from "@/convex/_generated/dataModel";
 import type { Doc } from "@/convex/_generated/dataModel";
 import { MessageBubble } from "@/components/MessageBubble";
 import { MessageInput } from "@/components/MessageInput";
+import { DateSeparator } from "@/components/DateSeparator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronDown } from "lucide-react";
-import { formatDateSeparator } from "@/lib/utils";
 
 interface ChatAreaProps {
   conversationId: Id<"conversations">;
@@ -97,13 +97,9 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
           </div>
         ) : (
           <>
-            {groupedMessages.map(({ dateLabel, messages: dayMsgs }) => (
+            {groupedMessages.map(({ dateLabel, date, messages: dayMsgs }) => (
               <div key={dateLabel}>
-                <div className="flex items-center justify-center my-4">
-                  <span className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                    {dateLabel}
-                  </span>
-                </div>
+                <DateSeparator date={date} />
                 <div className="space-y-1">
                   {dayMsgs.map((msg) => (
                     <MessageBubble
@@ -166,14 +162,16 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
 }
 
 function groupByDate(messages: Doc<"messages">[]) {
-  const groups: { dateLabel: string; messages: Doc<"messages">[] }[] = [];
-  let currentLabel = "";
+  const groups: { dateLabel: string; date: Date; messages: Doc<"messages">[] }[] = [];
+  let currentDay = "";
 
   for (const msg of messages) {
-    const label = formatDateSeparator(msg.timestamp);
-    if (label !== currentLabel) {
-      currentLabel = label;
-      groups.push({ dateLabel: label, messages: [] });
+    const d = new Date(msg.timestamp);
+    const dayKey = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    if (dayKey !== currentDay) {
+      currentDay = dayKey;
+      const label = d.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+      groups.push({ dateLabel: label, date: d, messages: [] });
     }
     groups[groups.length - 1].messages.push(msg);
   }
