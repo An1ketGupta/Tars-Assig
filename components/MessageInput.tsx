@@ -107,12 +107,14 @@ export function MessageInput({ conversationId }: MessageInputProps) {
           placeholder="Type a message... (Enter to send)"
           className="min-h-[44px] max-h-[160px] resize-none bg-muted border-0 focus-visible:ring-1 rounded-xl"
           rows={1}
+          aria-label="Message input"
         />
         <Button
           onClick={() => handleSend()}
           disabled={!content.trim() || isSending}
           size="icon"
           className="flex-shrink-0 h-11 w-11 rounded-xl"
+          aria-label="Send message"
         >
           <Send className="h-4 w-4" />
         </Button>
