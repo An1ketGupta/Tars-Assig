@@ -11,7 +11,7 @@ interface ConversationTitleProps {
 }
 
 export function ConversationTitle({ conversationId }: ConversationTitleProps) {
-  const conversation = useQuery(api.conversations.get, { conversationId });
+  const conversation = useQuery(api.conversations.get, { id: conversationId });
   const { user } = useUser();
 
   const otherUserId = conversation && !conversation.isGroup && user
