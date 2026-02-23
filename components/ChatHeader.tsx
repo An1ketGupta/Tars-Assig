@@ -71,19 +71,12 @@ export function ChatHeader({ conversationId, showBack }: ChatHeaderProps) {
       </div>
 
       <div className="flex-1 min-w-0">
-        <h2 className="font-semibold truncate">
-          {displayName}
-          {isGroup && memberCount && (
-            <span className="ml-1 font-normal text-sm text-muted-foreground">
-              · {memberCount} members
-            </span>
-          )}
-        </h2>
+        <h2 className="font-semibold truncate">{displayName}</h2>
         <p className="text-xs text-muted-foreground">
           {isGroup
-            ? `Group · ${memberCount} members`
+            ? `${memberCount} member${memberCount === 1 ? "" : "s"}`
             : isOnline
-            ? "Online"
+            ? "Active now"
             : "Offline"}
         </p>
       </div>
