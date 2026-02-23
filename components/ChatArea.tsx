@@ -2,13 +2,13 @@
 
 import { useQuery, useMutation } from "convex/react";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useUser } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import type { Doc } from "@/convex/_generated/dataModel";
 import { MessageBubble } from "@/components/MessageBubble";
 import { MessageInput } from "@/components/MessageInput";
 import { DateSeparator } from "@/components/DateSeparator";
+import { TypingIndicator } from "@/components/TypingIndicator";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronDown } from "lucide-react";
@@ -115,25 +115,7 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
             ))}
             {/* Typing indicator */}
             {typingUsers && typingUsers.length > 0 && (
-              <div className="flex items-end gap-2">
-                <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-2.5">
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-muted-foreground">
-                      {typingUsers.map((t: { userName: string }) => t.userName).join(", ")}{" "}
-                      {typingUsers.length === 1 ? "is" : "are"} typing
-                    </span>
-                    <div className="flex gap-0.5 ml-1">
-                      {[0, 1, 2].map((i) => (
-                        <div
-                          key={i}
-                          className="h-1.5 w-1.5 bg-muted-foreground rounded-full animate-bounce"
-                          style={{ animationDelay: `${i * 0.15}s` }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <TypingIndicator typingUsers={typingUsers} />
             )}
           </>
         )}
