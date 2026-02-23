@@ -47,7 +47,7 @@ export function ChatHeader({ conversationId, showBack }: ChatHeaderProps) {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/chat")}
           className="flex-shrink-0"
         >
           <ArrowLeft className="h-5 w-5" />
