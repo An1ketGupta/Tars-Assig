@@ -20,7 +20,12 @@ export function Sidebar() {
     <div className="flex flex-col h-full w-full border-r border-border bg-background">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
-        <h1 className="text-lg font-bold">Tars Chat</h1>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center h-7 w-7 rounded-lg bg-primary text-primary-foreground">
+            <MessageSquare className="h-4 w-4" />
+          </div>
+          <h1 className="text-lg font-bold">Tars Chat</h1>
+        </div>
         <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
