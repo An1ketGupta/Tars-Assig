@@ -21,7 +21,7 @@ export function ChatHeader({ conversationId, showBack }: ChatHeaderProps) {
 
   const otherClerkId =
     conversation && !conversation.isGroup
-      ? conversation.participants.find((p) => p !== user?.id) ?? ""
+    ? conversation.participants.find((p: string) => p !== user?.id) ?? ""
       : "";
 
   const otherUser = useQuery(

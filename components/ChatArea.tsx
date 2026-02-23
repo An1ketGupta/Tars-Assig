@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import type { Doc } from "@/convex/_generated/dataModel";
 import { MessageBubble } from "@/components/MessageBubble";
 import { MessageInput } from "@/components/MessageInput";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -124,7 +125,7 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
                 <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-2.5">
                   <div className="flex items-center gap-1">
                     <span className="text-xs text-muted-foreground">
-                      {typingUsers.map((t) => t.userName).join(", ")}{" "}
+                      {typingUsers.map((t: { userName: string }) => t.userName).join(", ")}{" "}
                       {typingUsers.length === 1 ? "is" : "are"} typing
                     </span>
                     <div className="flex gap-0.5 ml-1">
@@ -164,10 +165,8 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
   );
 }
 
-function groupByDate(
-  messages: Array<{ _id: Id<"messages">; timestamp: number; [key: string]: unknown }>
-) {
-  const groups: { dateLabel: string; messages: typeof messages }[] = [];
+function groupByDate(messages: Doc<"messages">[]) {
+  const groups: { dateLabel: string; messages: Doc<"messages">[] }[] = [];
   let currentLabel = "";
 
   for (const msg of messages) {
