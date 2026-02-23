@@ -8,8 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Trash2 } from "lucide-react";
 import { formatTimestamp } from "@/lib/utils";
 import { cn } from "@/lib/utils";
-
-const REACTION_EMOJIS = ["👍", "❤️", "😂", "😮", "😢"];
+import { MessageReactionsPicker, ReactionCounts } from "@/components/MessageReactions";
 
 interface MessageBubbleProps {
   messageId: Id<"messages">;
@@ -42,8 +41,6 @@ export function MessageBubble({
     await toggleReaction({ messageId, emoji });
   };
 
-  const hasReactions = reactions && Object.keys(reactions).length > 0;
-
   return (
     <div className={cn("flex items-end gap-2 group", isMe && "flex-row-reverse")}>
       {!isMe && (
@@ -63,27 +60,20 @@ export function MessageBubble({
         )}
 
         <div className="relative">
-          {/* Reaction picker on hover */}
+          {/* Reaction picker + delete on hover */}
           {!isDeleted && (
             <div
               className={cn(
-                "absolute -top-8 flex gap-1 bg-popover border border-border rounded-full px-2 py-1 shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10",
+                "absolute -top-10 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10",
                 isMe ? "right-0" : "left-0"
               )}
             >
-              {REACTION_EMOJIS.map((emoji) => (
-                <button
-                  key={emoji}
-                  onClick={() => handleReaction(emoji)}
-                  className="text-sm hover:scale-125 transition-transform"
-                >
-                  {emoji}
-                </button>
-              ))}
+              <MessageReactionsPicker onReact={handleReaction} />
               {isMe && (
                 <button
                   onClick={handleDelete}
-                  className="ml-1 text-destructive hover:scale-125 transition-transform"
+                  className="flex items-center justify-center h-8 w-8 rounded-full bg-popover border border-border shadow-lg text-destructive hover:bg-accent transition-colors"
+                  aria-label="Delete message"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
@@ -105,23 +95,12 @@ export function MessageBubble({
         </div>
 
         {/* Reactions */}
-        {hasReactions && !isDeleted && (
-          <div className={cn("flex flex-wrap gap-1 mt-1", isMe && "justify-end")}>
-            {Object.entries(reactions!).map(([emoji, users]) => (
-              <button
-                key={emoji}
-                onClick={() => handleReaction(emoji)}
-                className={cn(
-                  "flex items-center gap-0.5 text-xs rounded-full px-2 py-0.5 border transition-colors",
-                  users.includes(user?.id ?? "")
-                    ? "bg-primary/20 border-primary/40"
-                    : "bg-muted border-border hover:bg-accent"
-                )}
-              >
-                {emoji} <span>{users.length}</span>
-              </button>
-            ))}
-          </div>
+        {!isDeleted && (
+          <ReactionCounts
+            reactions={reactions}
+            onReact={handleReaction}
+            currentUserId={user?.id}
+          />
         )}
 
         <span className="text-xs text-muted-foreground mt-0.5 mx-1">
