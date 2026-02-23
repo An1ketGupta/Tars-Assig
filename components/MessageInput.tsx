@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { useUser } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Send, AlertCircle, RefreshCw } from "lucide-react";
 
-const TYPING_DEBOUNCE_MS = 500;
+const TYPING_DEBOUNCE_MS = 2000;
 
 interface MessageInputProps {
   conversationId: Id<"conversations">;
@@ -36,7 +36,7 @@ export function MessageInput({ conversationId }: MessageInputProps) {
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
     typingTimeoutRef.current = setTimeout(() => {
       clearTyping({ conversationId });
-    }, 2000);
+    }, TYPING_DEBOUNCE_MS);
   }, [conversationId, user, setTyping, clearTyping]);
 
   const handleSend = async (messageContent?: string) => {

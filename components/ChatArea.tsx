@@ -45,6 +45,7 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
     } else {
       setShowNewMessages(true);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages?.length, conversationId, markRead, scrollToBottom]);
 
   // Detect scroll position
