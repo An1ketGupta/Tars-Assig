@@ -56,6 +56,11 @@ export function UserList() {
           </div>
         ) : (
           <div className="p-2">
+            {!searchQuery && users.filter((u) => u.isOnline).length > 0 && (
+              <p className="text-xs text-muted-foreground px-3 py-1.5 font-medium">
+                {users.filter((u) => u.isOnline).length} online
+              </p>
+            )}
             {users.map((user) => (
               <button
                 key={user._id}
