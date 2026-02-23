@@ -1,14 +1,11 @@
 "use client";
 
 import { Sidebar } from "@/components/Sidebar";
+import { AuthGuard } from "@/components/AuthGuard";
 import { useStoreUser } from "@/hooks/useStoreUser";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 
-export default function ChatLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function ChatInner({ children }: { children: React.ReactNode }) {
   useStoreUser();
   useOnlineStatus();
 
@@ -24,5 +21,17 @@ export default function ChatLayout({
         {children}
       </div>
     </div>
+  );
+}
+
+export default function ChatLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <AuthGuard>
+      <ChatInner>{children}</ChatInner>
+    </AuthGuard>
   );
 }
