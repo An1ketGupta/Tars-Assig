@@ -12,7 +12,7 @@ function ChatInner({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen bg-background overflow-hidden">
       {/* Sidebar - visible on desktop */}
-      <div className="hidden md:flex w-80 flex-shrink-0 flex-col border-r border-border">
+      <div className="hidden md:flex w-80 flex-shrink-0 flex-col border-r border-border/50">
         <Sidebar />
       </div>
 

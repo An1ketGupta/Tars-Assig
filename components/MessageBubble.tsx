@@ -43,11 +43,11 @@ export function MessageBubble({
   };
 
   return (
-    <div className={cn("flex items-end gap-2 group", isMe && "flex-row-reverse")}>
+    <div className={cn("flex items-end gap-2 group py-0.5 animate-fade-in", isMe && "flex-row-reverse")}>
       {!isMe && (
-        <Avatar className="h-7 w-7 flex-shrink-0">
+        <Avatar className="h-7 w-7 flex-shrink-0 ring-1 ring-border/50">
           <AvatarImage src={senderData?.imageUrl} />
-          <AvatarFallback className="text-xs bg-primary text-primary-foreground">
+          <AvatarFallback className="text-[10px] font-semibold bg-gradient-to-br from-primary/80 to-primary text-primary-foreground">
             {senderData?.name?.charAt(0).toUpperCase() ?? "?"}
           </AvatarFallback>
         </Avatar>
@@ -55,7 +55,7 @@ export function MessageBubble({
 
       <div className={cn("flex flex-col max-w-[70%]", isMe && "items-end")}>
         {!isMe && senderData && (
-          <span className="text-xs text-muted-foreground mb-0.5 ml-1">
+          <span className="text-[10px] text-muted-foreground/70 mb-1 ml-1 font-medium">
             {senderData.name}
           </span>
         )}
@@ -65,7 +65,7 @@ export function MessageBubble({
           {!isDeleted && (
             <div
               className={cn(
-                "absolute -top-10 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10",
+                "absolute -top-10 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 scale-95 group-hover:scale-100 z-10",
                 isMe ? "right-0" : "left-0"
               )}
             >
@@ -73,7 +73,7 @@ export function MessageBubble({
               {isMe && (
                 <button
                   onClick={handleDelete}
-                  className="flex items-center justify-center h-8 w-8 rounded-full bg-popover border border-border shadow-lg text-destructive hover:bg-accent transition-colors"
+                  className="flex items-center justify-center h-8 w-8 rounded-full bg-popover/90 backdrop-blur-sm border border-border/50 shadow-lg text-destructive hover:bg-destructive hover:text-white transition-all duration-200"
                   aria-label="Delete message"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
@@ -84,11 +84,11 @@ export function MessageBubble({
 
           <div
             className={cn(
-              "rounded-2xl px-4 py-2.5 text-sm",
+              "rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed",
               isMe
-                ? "bg-primary text-primary-foreground rounded-br-sm"
-                : "bg-muted text-foreground rounded-bl-sm",
-              isDeleted && "italic opacity-60"
+                ? "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-md shadow-lg shadow-primary/10"
+                : "bg-muted/70 text-foreground rounded-bl-md border border-border/30",
+              isDeleted && "italic opacity-50"
             )}
           >
             {isDeleted ? "This message was deleted" : content}
@@ -104,7 +104,7 @@ export function MessageBubble({
           />
         )}
 
-        <span className="text-xs text-muted-foreground mt-0.5 mx-1 flex items-center gap-1">
+        <span className="text-[10px] text-muted-foreground/60 mt-1 mx-1 flex items-center gap-1 font-medium">
           {formatTimestamp(timestamp)}
           <MessageStatus isMine={isMe} />
         </span>

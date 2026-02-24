@@ -7,7 +7,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Send, AlertCircle, RefreshCw } from "lucide-react";
+import { Send, AlertCircle, RefreshCw, Smile, Paperclip } from "lucide-react";
 
 const TYPING_DEBOUNCE_MS = 2000;
 
@@ -78,11 +78,11 @@ export function MessageInput({ conversationId }: MessageInputProps) {
   }, []);
 
   return (
-    <div className="p-4 border-t border-border bg-background">
+    <div className="px-4 py-3 bg-background/80 backdrop-blur-xl border-t border-border/50">
       {sendError && (
-        <div className="flex items-center gap-2 mb-2 text-destructive text-xs bg-destructive/10 rounded-lg px-3 py-2">
+        <div className="flex items-center gap-2 mb-2.5 text-destructive text-xs bg-destructive/5 border border-destructive/20 rounded-xl px-3 py-2">
           <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
-          <span className="flex-1">Failed to send: {sendError}</span>
+          <span className="flex-1 font-medium">Failed to send: {sendError}</span>
           <Button
             variant="ghost"
             size="sm"
@@ -95,25 +95,30 @@ export function MessageInput({ conversationId }: MessageInputProps) {
         </div>
       )}
       <div className="flex items-end gap-2">
-        <Textarea
-          ref={textareaRef}
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-            setSendError(null);
-            if (e.target.value) handleTyping();
-          }}
-          onKeyDown={handleKeyDown}
-          placeholder="Type a message... (Enter to send)"
-          className="min-h-[44px] max-h-[160px] resize-none bg-muted border-0 focus-visible:ring-1 rounded-xl"
-          rows={1}
-          aria-label="Message input"
-        />
+        <div className="flex-1 relative">
+          <Textarea
+            ref={textareaRef}
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+              setSendError(null);
+              if (e.target.value) handleTyping();
+            }}
+            onKeyDown={handleKeyDown}
+            placeholder="Write a message..."
+            className="min-h-[44px] max-h-[160px] resize-none bg-muted/50 border border-border/30 focus-visible:ring-1 focus-visible:ring-primary/50 focus-visible:border-primary/30 rounded-xl pr-10 text-[13px] placeholder:text-muted-foreground/50"
+            rows={1}
+            aria-label="Message input"
+          />
+          <button className="absolute right-3 bottom-3 text-muted-foreground/40 hover:text-muted-foreground transition-colors">
+            <Smile className="h-4 w-4" />
+          </button>
+        </div>
         <Button
           onClick={() => handleSend()}
           disabled={!content.trim() || isSending}
           size="icon"
-          className="flex-shrink-0 h-11 w-11 rounded-xl"
+          className="flex-shrink-0 h-11 w-11 rounded-xl bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 disabled:shadow-none transition-all duration-200"
           aria-label="Send message"
         >
           <Send className="h-4 w-4" />

@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# convex compiled output (source is .ts, not .js)
+convex/*.js
+!convex/_generated/*.js
